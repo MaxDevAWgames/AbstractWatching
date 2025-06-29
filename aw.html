@@ -3,7 +3,6 @@
 <head>
     <title>Abstract Watching</title>
     <style>
-        /* 原有样式保持不变 */
         body {
             margin: 0;
             padding: 0;
@@ -61,7 +60,7 @@
     </div>
 
     <script>
-        let currentAudio = null; // 新增：保存当前音频实例
+        let currentAudio = null;
 
         const startButton = document.getElementById('startButton');
         const gameContainer = document.getElementById('gameContainer');
@@ -71,13 +70,11 @@
             titleScreen.style.display = 'none';
             gameContainer.style.display = 'flex';
 
-            // 停止之前的音频（如果存在）
             if(currentAudio) {
                 currentAudio.pause();
                 currentAudio = null;
             }
 
-            // 播放新音频
             currentAudio = new Audio('1.mp3');
             const image = new Image();
             image.src = '1.png';
@@ -87,7 +84,6 @@
             currentAudio.play();
 
             setTimeout(() => {
-                // 停止音乐
                 if(currentAudio) {
                     currentAudio.pause();
                     currentAudio = null;
