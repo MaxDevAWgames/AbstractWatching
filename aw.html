@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Abstract Watching</title>
+    <style>
+        /* 原有样式保持不变 */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial;
+        }
+        #titleScreen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('title.png') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #gameContainer {
+            display: none;
+            background: black;
+            width: 100%;
+            height: 100vh;
+        }
+        #mediaContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 24px;
+            background: rgba(0, 255, 255, 0.5);
+            border: 2px solid #00ffff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: rgba(0, 255, 255, 0.8);
+        }
+        img, video {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div id="titleScreen">
+        <button id="startButton">Start Game</button>
+    </div>
+
+    <div id="gameContainer">
+        <div id="mediaContainer"></div>
+    </div>
+
+    <script>
+        let currentAudio = null; // 新增：保存当前音频实例
+
+        const startButton = document.getElementById('startButton');
+        const gameContainer = document.getElementById('gameContainer');
+        const mediaContainer = document.getElementById('mediaContainer');
+
+        function startGame() {
+            titleScreen.style.display = 'none';
+            gameContainer.style.display = 'flex';
+
+            // 停止之前的音频（如果存在）
+            if(currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+
+            // 播放新音频
+            currentAudio = new Audio('1.mp3');
+            const image = new Image();
+            image.src = '1.png';
+            
+            mediaContainer.innerHTML = '';
+            mediaContainer.appendChild(image);
+            currentAudio.play();
+
+            setTimeout(() => {
+                // 停止音乐
+                if(currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+
+                mediaContainer.innerHTML = '';
+                const video = document.createElement('video');
+                video.src = 'source.mp4';
+                video.controls = false;
+                video.autoplay = true;
+                video.style.width = '100%';
+                
+                video.onended = () => {
+                    gameContainer.style.display = 'none';
+                    titleScreen.style.display = 'flex';
+                }
+                
+                mediaContainer.appendChild(video);
+            }, 10000);
+        }
+
+        startButton.addEventListener('click', startGame);
+    </script>
+</body>
+</html>
